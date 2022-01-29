@@ -1,0 +1,132 @@
+Questions: 
+\begin{enumerate}
+ \item 
+The following function is to find the largest value in a given array:
+
+\begin{algorithm}[H]
+\caption{Find Maximum}
+\label{alg:euclid}
+\begin{algorithmic}[1] 
+    \Procedure{FindMax}{$A$} 
+    \State $m \rightarrow A[0]$
+    \While{$i < n - 1$} \Comment{Search the entire list}
+        \State if $A[i] > m$
+        \State Then $m = A[i]$
+    \EndWhile\label{euclidendwhile}
+    \State \textbf{return} $m$
+    \EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+1. If value that is bigger than A[0] is found then m is swapped with the new largest value. 
+
+2. In the end if no larger value is found then A[0] is returned.
+
+3. In the base case n = 1, the function also holds since the loop is never run and just returns m. 
+
+The best case for this algorithm is a for the largest value to be at n=1, but still requires the search of the entire array. The same is true for the worst case, the list will always need to be searched exhaustively. So Big-O, Big-Theta, and Big-Omega are all the same as O(n).
+ 
+ 
+ 
+ \item Analysis of the recursive function that takes in two numbers and multiples them.
+ 
+ 1. Variable a will always be an even number and always grow larger with each iteration. except on the first iteration where plus a will equal a if b over 2 is odd.
+ 
+ 2. Each iteration b will get smaller until it becomes a multiple of 2\^n and fall to zero with all evens. Once it becomes a multiple of 2\^n it continually divide by 2 until it reaches 2, then dividing to 1, and 1 divided by 2 giving zero as it is a floor of the operation. For all odd values of b the value of a is added at the end to get the multiplication of a x b
+ 
+ 3. As an example if a is 30 and b is 5 then a will be $T(1)=30 \rightarrow T(2)=60 \rightarrow T(3)=120 \rightarrow T(4)=240 $ then b will follow the pattern $ T(1)=5 \rightarrow T(2)=2 \rightarrow T(3)=1 \rightarrow T(4)=0 $
+ 
+ 4. Once b equals zero is hit the recursive function collapses and is finished. Now each iteration of T(n) where b was odd will be summed and returned to the user. So, for our example T(1) is included since b was equal to 5, T(2) is ignored since b was 2, T(3) is added since b was 1, and T(4) is ignored. Thus T(1) + T(3) = 150, which is indeed the same as a times b.  
+ 
+ The best case scenario is that b is equal to 0 in the first case and completes in one operation. Big-Omega(1). The average case would be Theta(n) since the most common outcome is a set of (a,b) having some linear number of steps before an even number value of b is reached. The upper bond is like O(n) as well since their is always a set number n iterations of T(n) that will give an answer.  
+ 
+
+
+ \item Solving a recurrence relation using substitution. 
+ 
+\begin{equation}
+\begin{array}{ll}
+T(1)=1 & n \leqslant 2 \\
+T(n)=2 T(n-1)+n-1 & n>2
+\end{array}
+\end{equation}
+
+Please see formula sheet on the last page for substitution. 
+
+\item Solving using master theorem for recurrence relation:
+
+\begin{equation}
+\begin{array}{ll}
+T(n)=c & n \leq 2 \\
+T(n)=7 T\left(\frac{n}{2}\right)+n^{2} & n > 2
+\end{array}
+\end{equation}
+
+By master theorem we get that.
+
+\begin{equation}
+T(n)=a T\left(\frac{n}{b}\right)+f(n)
+\end{equation}
+
+By substituting the numbers we get that
+\begin{equation}
+\log _{2} 7>2 \quad \rightarrow O\left(n^{\log _{b} a}\right)
+\end{equation}
+
+\item This pseudo code version of merge sort is for merging a list of length n into n lists and arranging them. 
+
+\begin{algorithm}[H]
+\caption{Merge Sort}
+\label{alg:euclid}
+\begin{algorithmic}[1] 
+    \Procedure{MergeSort}{$lst,left,right$} 
+    \State $if left \geq right$
+    \State $\textbf{return}$
+    \State $mid = (left+right)/2$
+    \State $\textbf{MergeSort(arr, left, mid)}$
+    \State $\textbf{MergeSort(arr, mid + 1, right)}$
+    \State $\textbf{Merge(arr, left, mid, right)}$
+    \EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+This algorithm will divide the original list into n number of arrays. Then when the list becomes n=1 it will end the recursion and that element will be merged to new list. The recursion will end based on the index where each element should be in the list. The elements of the list are returned and arranged as they are pasted to the merge function. 
+
+The time complexity of this algorithm would be 
+\begin{equation}
+O\left(n^{\log _{2} 3}\right)
+\end{equation}
+Since the code follows that a is 2 while b is 2. Thus by master theorem we get this big O. 
+
+\item For a more efficient version of polynomial multiplication
+
+\begin{equation}
+c_j = \sum_{k=0}^j a_k b_{j-k},\quad 0\leqslant j\leqslant 2n.
+\end{equation}
+
+if we split all values of A into A zero and one, where zero is the even entries and one is the odd. As well doing the same with B in this manor, 
+\begin{equation}
+A_0(x) = \sum_{j=0}^{\left\lfloor\frac n2\right\rfloor-1}a_jx^j,\quad A_1(x) = \sum_{j=\left\lfloor\frac n2\right\rfloor}^{n}a_jx^{j-\left\lfloor\frac n2\right\rfloor}.
+\end{equation}
+
+\begin{align}
+A(x)B(x) &= \left(A_0(x) + A_1(x)x^{\left\lfloor\frac n2\right\rfloor}\right)\left(B_0(x) + B_1(x)x^{\left\lfloor\frac n2\right\rfloor}\right)
+\end{align}
+
+This can then be done recursively for every pair of coefficients. Since each 
+
+\begin{equation}
+a_{0}+\left(a_{1} x+  \left(a_{2} x^{2}+a_{3} x^{3}\right)\right)...
+\end{equation}
+
+Giving 
+\begin{equation}
+T(n)= 3T( \frac n2) + C_n
+\end{equation}
+
+By master theorem is
+\begin{equation}
+ O(n ^ {\log_{2}(3)} )
+\end{equation}
+
+\end{enumerate}
